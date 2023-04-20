@@ -1,5 +1,17 @@
 class ListsController < ApplicationController
   def new
+    @list = List.new
+  end
+
+  def create
+    #データを受け取る＆新規登録のためのインスタンスを作成
+    list = List.new(list_params)
+    
+    #データをデータベースに保存するためのメソッド(saveメソッド)を実行
+    list.save
+    
+    #トップ画面へリダイレクト
+    redirect_to '/top'
   end
 
   def index
@@ -10,4 +22,12 @@ class ListsController < ApplicationController
 
   def edit
   end
+  
+  private
+  #ストロングパラメータ
+  def list_params
+    params.require(:list).permit(:title, :body)
+  end
+  
+  
 end
